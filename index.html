@@ -679,100 +679,8 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
 
 <!-- RESTAURANTS TAB -->
 <div class="content" id="tab-restaurants" style="display:none">
-  <div class="section-label">Banff</div>
-  <div class="rest-list">
-    <div class="rest-card" data-key="park-distillery" onclick="toggleVisited(this)">
-      <div class="rest-icon-wrap"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg></div>
-      <div class="rest-body"><div class="rest-name">Park Distillery</div><div class="rest-meta">Banff Ave &middot; Dinner + drinks &middot; Multiple visits</div></div>
-      <div class="rest-right"><div class="rest-fav">Staple</div><div class="rest-tags"><span class="rest-tag">Dinner</span><span class="rest-tag">Drinks</span></div></div>
-    </div>
-    <div class="rest-card" data-key="three-bears-brewery" onclick="toggleVisited(this)">
-      <div class="rest-icon-wrap"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 8h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2"/><rect x="2" y="6" width="15" height="12" rx="2"/></svg></div>
-      <div class="rest-body"><div class="rest-name">Three Bears Brewery</div><div class="rest-meta">Banff &middot; Craft beer &middot; Great happy hour</div></div>
-      <div class="rest-right"><div class="rest-fav">Staple</div><div class="rest-tags"><span class="rest-tag">Brewery</span></div></div>
-    </div>
-    <div class="rest-card" data-key="coyotes" onclick="toggleVisited(this)">
-      <div class="rest-icon-wrap"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-      <div class="rest-body"><div class="rest-name">Coyotes</div><div class="rest-meta">Banff &middot; Breakfast</div></div>
-      <div class="rest-right"><div class="rest-tags"><span class="rest-tag">Breakfast</span></div></div>
-    </div>
-    <div class="rest-card" data-key="eddies-burger-bar" onclick="toggleVisited(this)">
-      <div class="rest-icon-wrap"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M8 14L6 22h12l-2-8"/></svg></div>
-      <div class="rest-body"><div class="rest-name">Eddie&rsquo;s Burger Bar</div><div class="rest-meta">Banff &middot; Get the fried pickles</div></div>
-      <div class="rest-right"><div class="rest-tags"><span class="rest-tag">Casual</span></div></div>
-    </div>
-    <div class="rest-card" data-key="block-kitchen-and-bar" onclick="toggleVisited(this)">
-      <div class="rest-icon-wrap"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg></div>
-      <div class="rest-body"><div class="rest-name">Block Kitchen &amp; Bar</div><div class="rest-meta">Banff &middot; Asian tapas</div></div>
-      <div class="rest-right"><div class="rest-tags"><span class="rest-tag">Asian</span></div></div>
-    </div>
-    <div class="rest-card" data-key="maclab-bistro" onclick="toggleVisited(this)">
-      <div class="rest-icon-wrap"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-      <div class="rest-body"><div class="rest-name">MacLab Bistro</div><div class="rest-meta">Banff &middot; Great mountain views</div></div>
-      <div class="rest-right"><div class="rest-tags"><span class="rest-tag">Views</span></div></div>
-    </div>
-    <div class="rest-card" data-key="rundle-bar" onclick="toggleVisited(this)">
-      <div class="rest-icon-wrap"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div>
-      <div class="rest-body"><div class="rest-name">Rundle Bar</div><div class="rest-meta">Fairmont Banff Springs &middot; On 7/11 plan &middot; Iconic views</div></div>
-      <div class="rest-right"><div class="rest-tags"><span class="rest-tag">Drinks</span><span class="rest-tag">Views</span></div></div>
-    </div>
-  </div>
-
-  <div class="section-label">Canmore</div>
-  <div class="rest-list">
-    <div class="rest-card" data-key="grizzly-paw-pub" onclick="toggleVisited(this)">
-      <div class="rest-icon-wrap"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 8h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2"/><rect x="2" y="6" width="15" height="12" rx="2"/></svg></div>
-      <div class="rest-body"><div class="rest-name">Grizzly Paw Pub</div><div class="rest-meta">Canmore &middot; Craft beer + pub food</div></div>
-      <div class="rest-right"><div class="rest-fav">Favorite</div><div class="rest-tags"><span class="rest-tag">Pub</span></div></div>
-    </div>
-    <div class="rest-card" data-key="muriettas-mountain-bar-and-grill" onclick="toggleVisited(this)">
-      <div class="rest-icon-wrap"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
-      <div class="rest-body"><div class="rest-name">Muriettas Mountain Bar &amp; Grill</div><div class="rest-meta">Canmore &middot; Views &middot; Multiple visits</div></div>
-      <div class="rest-right"><div class="rest-fav">Favorite</div><div class="rest-tags"><span class="rest-tag">Views</span></div></div>
-    </div>
-    <div class="rest-card" data-key="flatbread-place" onclick="toggleVisited(this)">
-      <div class="rest-icon-wrap"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg></div>
-      <div class="rest-body"><div class="rest-name">Flatbread Place</div><div class="rest-meta">Canmore &middot; Name TBD &mdash; you called it great</div></div>
-      <div class="rest-right"><div class="rest-tags"><span class="rest-tag">Pizza</span></div></div>
-    </div>
-    <div class="rest-card" data-key="bridgette-bar" onclick="toggleVisited(this)">
-      <div class="rest-icon-wrap"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg></div>
-      <div class="rest-body"><div class="rest-name">Bridgette Bar</div><div class="rest-meta">Canmore &middot; Pizza &middot; HH 2&ndash;5 PM half price</div></div>
-      <div class="rest-right"><div class="rest-tags"><span class="rest-tag">Pizza</span><span class="rest-tag">Happy Hour</span></div></div>
-    </div>
-    <div class="rest-card" data-key="tank310" onclick="toggleVisited(this)">
-      <div class="rest-icon-wrap"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
-      <div class="rest-body"><div class="rest-name">Tank310</div><div class="rest-meta">Canmore &middot; Views &middot; Get the sampler &middot; Missed in 2024</div></div>
-      <div class="rest-right"><div class="rest-tags"><span class="rest-tag">Views</span></div></div>
-    </div>
-    <div class="rest-card" data-key="iron-goat-pub-and-grill" onclick="toggleVisited(this)">
-      <div class="rest-icon-wrap"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg></div>
-      <div class="rest-body"><div class="rest-name">Iron Goat Pub &amp; Grill</div><div class="rest-meta">Canmore &middot; Views</div></div>
-      <div class="rest-right"><div class="rest-tags"><span class="rest-tag">Pub</span><span class="rest-tag">Views</span></div></div>
-    </div>
-    <div class="rest-card" data-key="the-local-canmore" onclick="toggleVisited(this)">
-      <div class="rest-icon-wrap"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg></div>
-      <div class="rest-body"><div class="rest-name">The Local Canmore</div><div class="rest-meta">Canmore &middot; Casual local spot</div></div>
-      <div class="rest-right"><div class="rest-fav">Favorite</div><div class="rest-tags"><span class="rest-tag">Casual</span></div></div>
-    </div>
-    <div class="rest-card" data-key="eclipse-coffee" onclick="toggleVisited(this)">
-      <div class="rest-icon-wrap"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/></svg></div>
-      <div class="rest-body"><div class="rest-name">Eclipse Coffee</div><div class="rest-meta">Canmore &middot; Coffee</div></div>
-      <div class="rest-right"><div class="rest-tags"><span class="rest-tag">Coffee</span></div></div>
-    </div>
-    <div class="rest-card" data-key="rocky-mountain-bagel" onclick="toggleVisited(this)">
-      <div class="rest-icon-wrap"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-      <div class="rest-body"><div class="rest-name">Rocky Mountain Bagel</div><div class="rest-meta">Canmore &middot; Breakfast &middot; Done in 2023</div></div>
-      <div class="rest-right"><div class="rest-tags"><span class="rest-tag">Breakfast</span></div></div>
-    </div>
-    <div class="rest-card" data-key="wild-orchid-bistro" onclick="toggleVisited(this)">
-      <div class="rest-icon-wrap"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg></div>
-      <div class="rest-body"><div class="rest-name">Wild Orchid Bistro</div><div class="rest-meta">Canmore &middot; Asian</div></div>
-      <div class="rest-right"><div class="rest-tags"><span class="rest-tag">Asian</span></div></div>
-    </div>
-  </div>
-  <div class="spacer"></div>
-  <p style="font-size:11px;color:var(--text-4);text-align:center;letter-spacing:.03em;">Tap any restaurant to mark as visited</p>
+  <div id="restContainer"></div>
+  <p style="font-size:11px;color:var(--text-4);text-align:center;letter-spacing:.03em;padding-top:8px;">Tap any restaurant to mark as visited</p>
   <div class="spacer"></div>
 </div>
 
@@ -1486,25 +1394,105 @@ function updateUserIndicator(){
 }
 
 /* ── RESTAURANT VISITS ───────────────────────────────── */
+let restaurantsLoaded=false;
+let allRestaurants=[];
+let visitedSet=new Set();
+
 async function loadRestaurantVisits(){
+  if(restaurantsLoaded){
+    // just refresh visited state
+    await fetchVisitedState();
+    applyVisitedState();
+    return;
+  }
+  const container=document.getElementById('restContainer');
+  if(!container)return;
+  // show skeleton while loading
+  container.style.opacity='0';
+  try{
+    const [restRes,visitRes]=await Promise.all([
+      fetch(SUPABASE_URL+'/rest/v1/restaurants?select=*&order=region,sort_order',{headers:SB_HEADERS}),
+      fetch(SUPABASE_URL+'/rest/v1/restaurant_visits?select=restaurant_key,visited',{headers:SB_HEADERS})
+    ]);
+    allRestaurants=await restRes.json();
+    const visits=await visitRes.json();
+    visitedSet=new Set(Array.isArray(visits)?visits.filter(v=>v.visited).map(v=>v.restaurant_key):[]);
+  }catch(e){console.error('Restaurant load error:',e);}
+  renderRestaurants();
+  restaurantsLoaded=true;
+  container.style.transition='opacity 0.2s ease';
+  container.style.opacity='1';
+}
+
+async function fetchVisitedState(){
   try{
     const res=await fetch(SUPABASE_URL+'/rest/v1/restaurant_visits?select=restaurant_key,visited',{headers:SB_HEADERS});
-    const rows=await res.json();
-    if(Array.isArray(rows)){
-      rows.forEach(r=>{
-        if(r.visited){
-          const el=document.querySelector(`.rest-card[data-key="${r.restaurant_key}"]`);
-          if(el)el.classList.add('visited');
-        }
-      });
-    }
-  }catch(e){console.error('Restaurant visits load error:',e);}
+    const visits=await res.json();
+    visitedSet=new Set(Array.isArray(visits)?visits.filter(v=>v.visited).map(v=>v.restaurant_key):[]);
+  }catch(e){}
+}
+
+function applyVisitedState(){
+  document.querySelectorAll('.rest-card').forEach(card=>{
+    const key=card.dataset.key;
+    card.classList.toggle('visited',visitedSet.has(key));
+  });
+}
+
+function renderRestaurants(){
+  const container=document.getElementById('restContainer');
+  if(!container)return;
+  container.innerHTML='';
+  const regions=[...new Set(allRestaurants.map(r=>r.region))];
+  regions.forEach(region=>{
+    const label=document.createElement('div');
+    label.className='section-label';
+    label.textContent=region;
+    container.appendChild(label);
+    const list=document.createElement('div');
+    list.className='rest-list';
+    allRestaurants.filter(r=>r.region===region).forEach(r=>{
+      list.appendChild(buildRestCard(r));
+    });
+    container.appendChild(list);
+  });
+}
+
+function buildRestCard(r){
+  const el=document.createElement('div');
+  el.className='rest-card'+(visitedSet.has(r.id)?' visited':'');
+  el.dataset.key=r.id;
+  el.onclick=()=>toggleVisited(el);
+  const tagsHtml=(r.tags||[]).map(t=>`<span class="rest-tag">${t}</span>`).join('');
+  const favHtml=r.fav_label?`<div class="rest-fav">${r.fav_label}</div>`:'';
+  el.innerHTML=`
+    <div class="rest-icon-wrap">${getRestIcon(r.tags)}</div>
+    <div class="rest-body"><div class="rest-name">${r.name}</div><div class="rest-meta">${r.meta}</div></div>
+    <div class="rest-right">${favHtml}<div class="rest-tags">${tagsHtml}</div></div>`;
+  return el;
+}
+
+function getRestIcon(tags){
+  const t=(tags||[]).map(x=>x.toLowerCase());
+  if(t.includes('brewery')||t.includes('pub'))
+    return '<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 8h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2"/><rect x="2" y="6" width="15" height="12" rx="2"/></svg>';
+  if(t.includes('breakfast')||t.includes('coffee'))
+    return '<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>';
+  if(t.includes('views'))
+    return '<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>';
+  if(t.includes('drinks'))
+    return '<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg>';
+  if(t.includes('pizza'))
+    return '<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>';
+  // default fork & knife
+  return '<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>';
 }
 
 async function toggleVisited(el){
   el.classList.toggle('visited');
   const key=el.dataset.key;
   const visited=el.classList.contains('visited');
+  if(visited)visitedSet.add(key); else visitedSet.delete(key);
   try{
     await fetch(SUPABASE_URL+'/rest/v1/restaurant_visits',{
       method:'POST',
