@@ -6,6 +6,24 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="S&amp;K Wedding">
+<style>
+  /* Splash screen shown while app loads */
+  #app-splash{
+    position:fixed;inset:0;z-index:99999;
+    background:#FAFAF7;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+    transition:opacity 0.4s ease;
+  }
+  #app-splash.hidden{opacity:0;pointer-events:none;}
+  .splash-sk{font-family:Georgia,serif;font-size:52px;font-weight:400;letter-spacing:-.02em;color:#1A1C1B;}
+  .splash-sk em{color:#9A6F2E;font-style:italic;}
+  .splash-sub{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#A8ACA8;}
+  .splash-dot{width:6px;height:6px;border-radius:50%;background:#888B75;animation:splashPulse 1.2s ease-in-out infinite;}
+  @keyframes splashPulse{0%,100%{opacity:.3;transform:scale(0.8);}50%{opacity:1;transform:scale(1);}}
+</style>
 <title>S&amp;K — Canmore 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -360,6 +378,12 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
 </style>
 </head>
 <body>
+
+<div id="app-splash">
+  <div class="splash-sk">S<em>&</em>K</div>
+  <div class="splash-sub">Canmore 2026</div>
+  <div class="splash-dot"></div>
+</div>
 
 <header class="topbar" id="topbar">
   <div class="topbar-logo">
@@ -950,7 +974,9 @@ async function loadAndRenderItinerary(){
     allActivities=await res.json();
   }catch(e){allActivities=[];}
   renderItinerary();
-  // ensure journal tab stays hidden if it was showing
+  // hide splash screen once itinerary is rendered
+  const splash=document.getElementById('app-splash');
+  if(splash){splash.classList.add('hidden');setTimeout(()=>splash.remove(),400);}
   const journalTab=document.getElementById('tab-journal');
   if(journalTab&&currentTab!=='journal')journalTab.style.display='none';
 }
