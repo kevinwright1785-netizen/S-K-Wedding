@@ -810,7 +810,10 @@ function switchTab(tab){
   if(tab==='overview')buildOverview();
   if(tab==='share')buildPublicList();
   if(tab==='journal')initJournal();
-  if(tab==='restaurants')loadRestaurantVisits();
+  if(tab==='restaurants'){
+    if(restaurantsLoaded)renderRestaurants();
+    else loadRestaurantVisits();
+  }
 }
 
 let currentView='full';
@@ -1695,12 +1698,15 @@ if(new URLSearchParams(location.search).get('view')==='family'){
     if(TABS[i]==='share')b.style.display='none';
   });
   loadAndRenderItinerary();
+  loadRestaurantVisits(); // prefetch in background
 }else{
   if(currentUser){
     updateUserIndicator();
     loadAndRenderItinerary().then(()=>restoreCheckedState());
+    loadRestaurantVisits(); // prefetch in background
   } else {
     loadAndRenderItinerary();
+    loadRestaurantVisits(); // prefetch in background
     showUserPicker();
   }
 }
