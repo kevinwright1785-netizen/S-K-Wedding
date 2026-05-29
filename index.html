@@ -1822,7 +1822,7 @@ function buildJournalPicker(){
     const btn=document.createElement('button');
     btn.className='journal-day-btn';
     btn.dataset.date=d.date;
-    const hasEntry=journalEntries[d.date]&&Object.values(journalEntries[d.date]).some(v=>v.trim());
+    const hasEntry=journalEntries[d.date]&&Object.values(journalEntries[d.date]).some(v=>v&&typeof v==='string'&&v.trim());
     if(hasEntry)btn.classList.add('has-entry');
     btn.innerHTML=`<div class="jdb-num">${parseInt(d.label.split(' ')[1])}</div><div class="jdb-dow">${d.dow}</div><div class="jdb-dot"></div>`;
     btn.onclick=()=>selectJournalDay(d.date);
