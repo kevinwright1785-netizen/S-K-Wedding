@@ -252,12 +252,13 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
 .rest-card.visited .rest-name{text-decoration:line-through;color:var(--text-4);}
 .rest-meta{font-size:11px;color:var(--text-3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .rest-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0;}
-.rest-fav{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);}
+.rest-star{font-size:14px;color:var(--gold);line-height:1;}
+.rest-star-placeholder{width:14px;height:14px;}
 .rest-tags{display:flex;gap:3px;flex-wrap:wrap;justify-content:flex-end;}
 .rest-tag{font-size:9px;font-weight:500;padding:2px 6px;border-radius:var(--radius-full);background:var(--bg-sunken);color:var(--text-4);border:1px solid var(--border);}
 
 /* GUIDE */
-.guide-must-note{font-size:11px;color:var(--text-3);display:flex;align-items:center;gap:5px;}
+.guide-must-note{font-size:11px;color:var(--text-3);display:flex;align-items:center;gap:5px;margin-bottom:16px;}
 .guide-must-note span{color:var(--gold);}
 .guide-region{margin-bottom:28px;}
 .guide-region-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:9px;border-bottom:1px solid var(--border);}
@@ -318,24 +319,46 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
 .jdb-dow{font-size:8px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);}
 .jdb-dot{width:4px;height:4px;border-radius:50%;background:var(--sage);opacity:0;transition:opacity .15s;margin-top:2px;}
 
+/* Journal entry card - redesigned */
 .journal-card{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:12px;}
-.journal-card-top{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 10px;border-bottom:1px solid var(--border);background:var(--bg-sunken);}
-.journal-date-display{font-family:var(--font-display);font-size:16px;font-weight:400;color:var(--text);letter-spacing:-.01em;}
+
+.journal-card-top{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 12px;border-bottom:1px solid var(--border);background:var(--bg-sunken);}
+.journal-date-display{font-family:var(--font-display);font-size:18px;font-weight:400;color:var(--text);letter-spacing:-.02em;}
 .journal-save-status{font-size:10px;font-weight:500;letter-spacing:.06em;color:var(--text-4);display:flex;align-items:center;gap:5px;transition:color .2s;}
 .journal-save-status.saved{color:var(--sage);}
 .journal-save-status svg{width:11px;height:11px;}
 
-.journal-prompts{padding:4px 0;}
-.journal-prompt-block{padding:12px 16px;border-bottom:1px solid var(--border);}
-.journal-prompt-block:last-child{border-bottom:none;}
-.journal-prompt-label{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);margin-bottom:8px;opacity:.9;}
-.journal-prompt-label svg{flex-shrink:0;color:var(--sage);}
-.journal-textarea{width:100%;background:var(--bg-sunken);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;font-family:var(--font-ui);color:var(--text);line-height:1.6;resize:none;outline:none;transition:border-color .15s,box-shadow .15s;}
-.journal-textarea::placeholder{color:var(--text-4);}
-.journal-textarea:focus{border-color:var(--sage);box-shadow:0 0 0 3px rgba(74,124,89,0.1);}
+/* Prompts - flowing single card, no hard borders between */
+.journal-prompts{padding:0;}
+.journal-prompt-block{padding:16px 18px 0;}
+.journal-prompt-block:last-child{padding-bottom:16px;}
 
-.journal-complete-wrap{padding:14px 16px;border-top:1px solid var(--border);}
-.journal-complete-btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-ui);font-size:12px;font-weight:500;letter-spacing:.03em;color:var(--text-3);background:var(--bg-sunken);border:1.5px solid var(--border);border-radius:var(--radius-full);padding:9px 18px;cursor:pointer;transition:all .2s cubic-bezier(0.34,1.2,0.64,1);-webkit-tap-highlight-color:transparent;width:100%;justify-content:center;}
+.journal-prompt-label{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-4);margin-bottom:8px;}
+.journal-prompt-label svg{flex-shrink:0;color:var(--sage);opacity:.7;}
+
+/* Textarea - serif font, borderless, feels like writing */
+.journal-textarea{
+  width:100%;
+  background:transparent;
+  border:none;
+  border-bottom:1px solid var(--border);
+  border-radius:0;
+  padding:6px 0 12px;
+  font-size:14px;
+  font-family:var(--font-display);
+  font-weight:400;
+  color:var(--text);
+  line-height:1.7;
+  resize:none;
+  outline:none;
+  transition:border-color .2s;
+}
+.journal-textarea::placeholder{color:var(--text-4);font-family:var(--font-display);font-style:italic;}
+.journal-textarea:focus{border-bottom-color:var(--sage);}
+.journal-prompt-block:last-child .journal-textarea{border-bottom:none;}
+
+.journal-complete-wrap{padding:14px 18px;border-top:1px solid var(--border);background:var(--bg-sunken);}
+.journal-complete-btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-ui);font-size:12px;font-weight:500;letter-spacing:.03em;color:var(--text-3);background:var(--bg-elev);border:1.5px solid var(--border);border-radius:var(--radius-full);padding:9px 18px;cursor:pointer;transition:all .2s cubic-bezier(0.34,1.2,0.64,1);-webkit-tap-highlight-color:transparent;width:100%;justify-content:center;}
 .journal-complete-btn:hover{border-color:var(--sage);color:var(--sage);background:var(--sage-soft);}
 .journal-complete-btn:active{transform:scale(0.97);}
 .journal-complete-btn.completed{background:var(--sage);border-color:var(--sage);color:var(--sage-ink);box-shadow:var(--shadow-md);}
@@ -544,7 +567,7 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
 
 <!-- GUIDE TAB -->
 <div class="content" id="tab-guide" style="display:none">
-  <div class="guide-must-note"><span>&#9733;</span> = S&amp;K must-do&rsquo;s</div>
+  <div class="guide-must-note"><span>&#9733;</span> = Must do</div>
   <div style="height:20px"></div>
 
   <div class="guide-region">
@@ -672,8 +695,8 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
 
 <!-- RESTAURANTS TAB -->
 <div class="content" id="tab-restaurants" style="display:none">
+  <div class="guide-must-note"><span>&#9733;</span> = Favorite &nbsp;·&nbsp; Tap to mark as visited</div>
   <div id="restContainer"></div>
-  <p style="font-size:11px;color:var(--text-4);text-align:center;letter-spacing:.03em;padding-top:8px;">Tap any restaurant to mark as visited</p>
   <div class="spacer"></div>
 </div>
 
@@ -1460,7 +1483,7 @@ function buildRestCard(r){
   el.dataset.key=r.id;
   el.onclick=()=>toggleVisited(el);
   const tagsHtml=(r.tags||[]).map(t=>`<span class="rest-tag">${t}</span>`).join('');
-  const favHtml=r.fav_label?`<div class="rest-fav">${r.fav_label}</div>`:'';
+  const favHtml=r.fav_label?`<div class="rest-star" title="${r.fav_label}">★</div>`:'<div class="rest-star-placeholder"></div>';
   el.innerHTML=`
     <div class="rest-icon-wrap">${getRestIcon(r.tags)}</div>
     <div class="rest-body"><div class="rest-name">${r.name}</div><div class="rest-meta">${r.meta}</div></div>
@@ -1752,12 +1775,23 @@ let journalInitted=false;
 async function initJournal(){
   if(!currentUser)return;
   if(!journalInitted){
-    await loadAllJournalEntries();
+    // build picker immediately — don't wait for data
     buildJournalPicker();
     attachJournalListeners();
     journalInitted=true;
+    // default date before fetch so picker shows immediately
+    if(!journalCurrentDate){
+      const today=new Date().toISOString().slice(0,10);
+      const match=JOURNAL_DAYS.find(d=>d.date===today);
+      journalCurrentDate=match?today:JOURNAL_DAYS[0].date;
+    }
+    selectJournalDay(journalCurrentDate);
+    // load entries in background — dots and content update when ready
+    await loadAllJournalEntries();
+    buildJournalPicker(); // refresh dots
+    selectJournalDay(journalCurrentDate); // refresh fields with loaded data
+    return;
   }
-  // default to today if in range, else first day
   if(!journalCurrentDate){
     const today=new Date().toISOString().slice(0,10);
     const match=JOURNAL_DAYS.find(d=>d.date===today);
