@@ -579,7 +579,7 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
     <div class="ov-big" id="ovBig">&mdash;</div>
     <div class="ov-lbl">Days until the wedding</div>
   </div>
-  <div class="ov-filter-row">
+  <div class="ov-filter-row private-only">
     <button class="ov-filter-btn" data-filter="us" onclick="toggleFilter('us',this)"><span class="ov-filter-dot badge-us-dot"></span>Us Only</button>
     <button class="ov-filter-btn" data-filter="family" onclick="toggleFilter('family',this)"><span class="ov-filter-dot badge-family-dot"></span>Family</button>
     <button class="ov-filter-btn" data-filter="wedding" onclick="toggleFilter('wedding',this)"><span class="ov-filter-dot badge-wedding-dot"></span>Wedding</button>
@@ -885,6 +885,11 @@ function setView(v){
   renderItinerary();
   openCards.forEach(id=>{const c=document.getElementById(id);if(c)c.classList.add('open');});
   restoreCheckedState();
+  // re-render restaurants if already loaded so read-only state takes effect
+  if(restaurantsLoaded)renderRestaurants();
+  // refresh tab-specific dynamic content
+  if(currentTab==='overview')buildOverview();
+  if(currentTab==='share')buildPublicList();
 }
 
 function toggleDay(id){document.getElementById('day-'+id).classList.toggle('open');}
@@ -1293,8 +1298,10 @@ async function deleteActivity(){
         method:'DELETE',headers:SB_HEADERS
       });
       allActivities=allActivities.filter(a=>a.id!==editingActivityId);
+      const openCards=new Set([...document.querySelectorAll('.day-card.open')].map(c=>c.id));
       closeEditModal();
       await loadAndRenderItinerary();
+      openCards.forEach(id=>{const c=document.getElementById(id);if(c)c.classList.add('open');});
       await restoreCheckedState();
       setView(currentView);
     }catch(e){alert('Could not delete. Try again.');}
@@ -1338,8 +1345,11 @@ async function saveEditActivity(){
     const day_date=idx>-1?allActivities[idx].day_date:null;
     if(idx>-1)allActivities[idx]={...allActivities[idx],time_label,name,detail,is_optional,privacy};
     if(day_date)await resortDay(day_date);
+    // capture open day cards before re-render
+    const openCards=new Set([...document.querySelectorAll('.day-card.open')].map(c=>c.id));
     closeEditModal();
     await loadAndRenderItinerary();
+    openCards.forEach(id=>{const c=document.getElementById(id);if(c)c.classList.add('open');});
     await restoreCheckedState();
   }catch(e){alert('Could not save. Try again.');}
 }
@@ -1570,6 +1580,7 @@ function renderRestaurants(){
 }
 
 function buildRestCard(r){
+  const isFamilyView=currentView==='family';
   const el=document.createElement('div');
   el.className='rest-card'+(visitedSet.has(r.id)?' visited':'');
   el.dataset.key=r.id;
@@ -1577,19 +1588,34 @@ function buildRestCard(r){
   const tagsHtml=(r.tags||[]).map(t=>`<span class="rest-tag">${t}</span>`).join('');
   const favHtml=r.fav_label?`<div class="rest-star" title="${r.fav_label}">★</div>`:'<div class="rest-star-placeholder"></div>';
 
-  el.innerHTML=`
-    <div class="rest-icon-wrap" onclick="toggleVisited(this.closest('.rest-card'))">${getRestIcon(r.tags)}</div>
-    <div class="rest-body" onclick="toggleVisited(this.closest('.rest-card'))">
-      <div class="rest-name">${r.name}</div>
-      <div class="rest-meta">${r.meta||''}${r.notes?'<div class="rest-notes">'+r.notes+'</div>':''}</div>
-    </div>
-    <div class="rest-right">
-      ${favHtml}
-      <div class="rest-tags">${tagsHtml}</div>
-      <button class="rest-edit-btn" onclick="openRestEditModal('${r.id}')" title="Edit">
-        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-      </button>
-    </div>`;
+  if(isFamilyView){
+    // read-only — no click handlers, no edit button
+    el.style.cursor='default';
+    el.innerHTML=`
+      <div class="rest-icon-wrap">${getRestIcon(r.tags)}</div>
+      <div class="rest-body">
+        <div class="rest-name">${r.name}</div>
+        <div class="rest-meta">${r.meta||''}${r.notes?'<div class="rest-notes">'+r.notes+'</div>':''}</div>
+      </div>
+      <div class="rest-right">
+        ${favHtml}
+        <div class="rest-tags">${tagsHtml}</div>
+      </div>`;
+  } else {
+    el.innerHTML=`
+      <div class="rest-icon-wrap" onclick="toggleVisited(this.closest('.rest-card'))">${getRestIcon(r.tags)}</div>
+      <div class="rest-body" onclick="toggleVisited(this.closest('.rest-card'))">
+        <div class="rest-name">${r.name}</div>
+        <div class="rest-meta">${r.meta||''}${r.notes?'<div class="rest-notes">'+r.notes+'</div>':''}</div>
+      </div>
+      <div class="rest-right">
+        ${favHtml}
+        <div class="rest-tags">${tagsHtml}</div>
+        <button class="rest-edit-btn" onclick="openRestEditModal('${r.id}')" title="Edit">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
+      </div>`;
+  }
 
   return el;
 }
@@ -1763,11 +1789,19 @@ function applyFilter(){
 
 function buildOverview(){
   const list=document.getElementById('ovList');
-  if(list.children.length){applyFilter();return;}
+  if(!list)return;
+  list.innerHTML='';
   const diff=Math.ceil((new Date('2026-07-13T00:00:00')-new Date())/86400000);
   const big=document.getElementById('ovBig');
   if(big)big.textContent=diff>0?diff:'0';
-  DAYS.forEach((d,i)=>{
+  const isFamilyView=currentView==='family';
+  const visibleDays=isFamilyView
+    ? DAYS.filter(d=>{
+        const dayActs=allActivities.filter(a=>a.day_date===d.date);
+        return dayActs.some(a=>a.privacy!=='private');
+      })
+    : DAYS;
+  visibleDays.forEach((d,i)=>{
     const row=document.createElement('div');
     row.className='ov-row';
     row.dataset.filter=d.filter;
@@ -1782,21 +1816,33 @@ function buildOverview(){
     };
     row.innerHTML='<div class="ov-date-col"><div class="ov-date-num">'+d.dateNum+'</div><div class="ov-date-dow">'+d.dow+'</div></div>'
       +'<div class="ov-sep"></div>'
-      +'<div class="ov-info"><div class="ov-title">'+d.title+'</div><div class="ov-sub">'+d.sub+'</div></div>'
-      +'<span class="ov-badge badge '+d.badges[0].cls+'">'+d.badges[0].lbl+'</span>';
+      +'<div class="ov-info"><div class="ov-title">'+(isFamilyView?'July '+d.dateNum:d.title)+'</div>'+(isFamilyView?'':'<div class="ov-sub">'+d.sub+'</div>')+'</div>'
+      +(isFamilyView?'':'<span class="ov-badge badge '+d.badges[0].cls+'">'+d.badges[0].lbl+'</span>');
     list.appendChild(row);
   });
 }
 
 function buildPublicList(){
   const el=document.getElementById('publicList');
-  if(el.children.length)return;
-  DAYS.filter(d=>d.priv==='public').forEach(d=>{
+  if(!el)return;
+  el.innerHTML='';
+  // dynamic: show days that have at least one public activity in Supabase
+  const publicDays=DAYS.filter(d=>{
+    const dayActs=allActivities.filter(a=>a.day_date===d.date);
+    return dayActs.some(a=>a.privacy!=='private');
+  });
+  publicDays.forEach(d=>{
     const row=document.createElement('div');
     row.className='public-day-row';
     row.innerHTML='<span class="public-day-date">Jul '+d.dateNum+'</span><span class="public-day-title">'+d.title+'</span>';
     el.appendChild(row);
   });
+  if(!publicDays.length){
+    const empty=document.createElement('div');
+    empty.style.cssText='font-size:12px;color:var(--text-4);text-align:center;padding:12px;font-style:italic;';
+    empty.textContent='No days are currently public';
+    el.appendChild(empty);
+  }
 }
 
 function copyUrl(type){
