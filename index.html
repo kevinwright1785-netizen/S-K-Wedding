@@ -349,7 +349,7 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
   border-bottom:1px solid var(--border);
   border-radius:0;
   padding:6px 0 12px;
-  font-size:14px;
+  font-size:16px;
   font-family:var(--font-display);
   font-weight:400;
   color:var(--text);
@@ -358,7 +358,7 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
   outline:none;
   transition:border-color .2s;
 }
-.journal-textarea::placeholder{color:var(--text-4);font-family:var(--font-display);font-style:italic;}
+.journal-textarea::placeholder{color:var(--text-4);font-family:var(--font-display);font-style:italic;font-size:16px;}
 .journal-textarea:focus{border-bottom-color:var(--sage);}
 .journal-prompt-block:last-child .journal-textarea{border-bottom:none;}
 
@@ -477,7 +477,7 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
     <div style="display:flex;flex-direction:column;gap:10px;">
       <div>
         <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:5px;">Day</div>
-        <select id="modalDay" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:13px;outline:none;">
+        <select id="modalDay" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:16px;outline:none;">
           <option value="2026-07-09">Jul 9 — Arrival Day</option>
           <option value="2026-07-10">Jul 10 — Icefields Parkway</option>
           <option value="2026-07-11">Jul 11 — Golf + Banff</option>
@@ -493,15 +493,15 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
       </div>
       <div>
         <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:5px;">Time</div>
-        <input id="modalTime" type="text" placeholder="e.g. 3:00 PM or Morning" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:13px;outline:none;">
+        <input id="modalTime" type="text" placeholder="e.g. 3:00 PM or Morning" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:16px;outline:none;">
       </div>
       <div>
         <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:5px;">Activity <span style="color:var(--sage)">*</span></div>
-        <input id="modalName" type="text" placeholder="What are you doing?" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:13px;outline:none;">
+        <input id="modalName" type="text" placeholder="What are you doing?" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:16px;outline:none;">
       </div>
       <div>
         <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:5px;">Details</div>
-        <input id="modalDetail" type="text" placeholder="Optional notes..." style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:13px;outline:none;">
+        <input id="modalDetail" type="text" placeholder="Optional notes..." style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:16px;outline:none;">
       </div>
       <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-3);cursor:pointer;">
         <input id="modalOptional" type="checkbox" style="accent-color:var(--sage);width:14px;height:14px;">
@@ -523,15 +523,15 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
     <div style="display:flex;flex-direction:column;gap:10px;">
       <div>
         <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:5px;">Time</div>
-        <input id="editTime" type="text" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:13px;outline:none;">
+        <input id="editTime" type="text" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:16px;outline:none;">
       </div>
       <div>
         <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:5px;">Activity</div>
-        <input id="editName" type="text" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:13px;outline:none;">
+        <input id="editName" type="text" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:16px;outline:none;">
       </div>
       <div>
         <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:5px;">Details / Notes</div>
-        <textarea id="editDetail" rows="4" placeholder="Add notes, reminders, details..." style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:13px;outline:none;resize:none;line-height:1.5;"></textarea>
+        <textarea id="editDetail" rows="4" placeholder="Add notes, reminders, details..." style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:16px;outline:none;resize:none;line-height:1.5;"></textarea>
       </div>
       <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
         <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-3);cursor:pointer;">
@@ -561,7 +561,7 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
     <div style="font-size:11px;color:var(--text-4);margin-bottom:16px;">Notes are shared with both of you</div>
     <div>
       <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:5px;">Notes</div>
-      <textarea id="restEditNotes" rows="4" placeholder="Reservation details, what to order, memories..." style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:13px;outline:none;resize:none;line-height:1.5;transition:border-color .15s;"></textarea>
+      <textarea id="restEditNotes" rows="4" placeholder="Reservation details, what to order, memories..." style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:16px;outline:none;resize:none;line-height:1.5;transition:border-color .15s;"></textarea>
     </div>
     <div style="display:flex;gap:8px;margin-top:20px;align-items:center;">
       <button onclick="deleteRestaurant()" class="modal-delete-btn">
