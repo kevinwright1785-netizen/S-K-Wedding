@@ -388,9 +388,9 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
 .edit-day-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:8px 14px;font-family:var(--font-ui);font-size:11px;font-weight:500;color:var(--text-4);background:none;border:none;border-top:1px solid var(--border);cursor:pointer;transition:color var(--transition),background var(--transition);-webkit-tap-highlight-color:transparent;letter-spacing:.02em;}
 .edit-day-btn:hover{color:var(--sage);background:var(--sage-soft);}
 .edit-day-btn svg{width:11px;height:11px;}
-.day-badge-chip{font-size:11px;font-weight:500;padding:5px 11px;border-radius:var(--radius-full);border:1px solid var(--border);background:var(--bg-sunken);color:var(--text-3);cursor:pointer;font-family:var(--font-ui);transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.day-badge-chip{font-size:11px;font-weight:500;padding:5px 11px;border-radius:var(--radius-full);border:1.5px solid var(--border);background:var(--bg-sunken);color:var(--text-3);cursor:pointer;font-family:var(--font-ui);-webkit-tap-highlight-color:transparent;transition:background .15s,border-color .15s,color .15s;}
 .day-badge-chip.active{background:var(--sage-soft);border-color:var(--sage);color:var(--sage);}
-.day-badge-chip:hover{border-color:var(--sage-border);}
+.day-badge-chip:active{opacity:.8;}
 </style>
 </head>
 <body>
@@ -1578,11 +1578,19 @@ function openDayEditModal(dayId){
   const currentBadgeLabels=d.badges.map(b=>b.lbl);
   ALL_BADGES.forEach(b=>{
     const chip=document.createElement('button');
-    chip.className='day-badge-chip'+(currentBadgeLabels.includes(b.lbl)?' active':'');
+    const isActive=currentBadgeLabels.includes(b.lbl);
+    chip.className='day-badge-chip'+(isActive?' active':'');
     chip.dataset.cls=b.cls;
     chip.dataset.lbl=b.lbl;
+    chip.dataset.active=isActive?'1':'0';
     chip.textContent=b.lbl;
-    chip.onclick=()=>chip.classList.toggle('active');
+    chip.onclick=(e)=>{
+      e.preventDefault();
+      const nowActive=chip.dataset.active==='1';
+      chip.dataset.active=nowActive?'0':'1';
+      chip.classList.toggle('active',!nowActive);
+      void chip.offsetHeight;
+    };
     container.appendChild(chip);
   });
 
@@ -1604,7 +1612,7 @@ async function saveDayEdit(){
   const title=document.getElementById('dayEditTitle').value.trim();
   if(!title)return document.getElementById('dayEditTitle').focus();
   const subtitle=document.getElementById('dayEditSubtitle').value.trim();
-  const activeChips=[...document.querySelectorAll('#dayEditBadges .day-badge-chip.active')];
+  const activeChips=[...document.querySelectorAll('#dayEditBadges .day-badge-chip')].filter(c=>c.dataset.active==='1');
   const badges=activeChips.map(c=>({cls:c.dataset.cls,lbl:c.dataset.lbl}));
 
   try{
