@@ -1565,6 +1565,19 @@ const ALL_BADGES=[
   {cls:'badge-all',    lbl:'All Family'},
 ];
 
+function applyChipStyle(chip){
+  const active=chip.dataset.active==='1';
+  if(active){
+    chip.style.background='var(--sage-soft)';
+    chip.style.borderColor='var(--sage)';
+    chip.style.color='var(--sage)';
+  } else {
+    chip.style.background='var(--bg-sunken)';
+    chip.style.borderColor='var(--border)';
+    chip.style.color='var(--text-3)';
+  }
+}
+
 function openDayEditModal(dayId){
   editingDayId=dayId;
   const d=DAYS.find(d=>d.id===dayId);
@@ -1579,17 +1592,16 @@ function openDayEditModal(dayId){
   ALL_BADGES.forEach(b=>{
     const chip=document.createElement('button');
     const isActive=currentBadgeLabels.includes(b.lbl);
-    chip.className='day-badge-chip'+(isActive?' active':'');
+    chip.className='day-badge-chip';
     chip.dataset.cls=b.cls;
     chip.dataset.lbl=b.lbl;
     chip.dataset.active=isActive?'1':'0';
     chip.textContent=b.lbl;
+    applyChipStyle(chip);
     chip.onclick=(e)=>{
       e.preventDefault();
-      const nowActive=chip.dataset.active==='1';
-      chip.dataset.active=nowActive?'0':'1';
-      chip.classList.toggle('active',!nowActive);
-      void chip.offsetHeight;
+      chip.dataset.active=chip.dataset.active==='1'?'0':'1';
+      applyChipStyle(chip);
     };
     container.appendChild(chip);
   });
