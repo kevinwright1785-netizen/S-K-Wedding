@@ -257,6 +257,9 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
 .rest-edit-btn{width:24px;height:24px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:var(--text-4);background:none;border:none;cursor:pointer;transition:color var(--transition),background var(--transition);-webkit-tap-highlight-color:transparent;margin-top:2px;}
 .rest-edit-btn:hover{color:var(--sage);background:var(--sage-soft);}
 .rest-notes{font-size:11px;color:var(--sage);margin-top:2px;font-style:italic;line-height:1.4;}
+.rest-tag-pick{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--text-3);font-family:var(--font-ui);padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-full);cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.rest-tag-pick:has(input:checked){background:var(--sage-soft);border-color:var(--sage);color:var(--sage);}
+.rest-tag-pick input{display:none;}
 .rest-tags{display:flex;gap:3px;flex-wrap:wrap;justify-content:flex-end;}
 .rest-tag{font-size:9px;font-weight:500;padding:2px 6px;border-radius:var(--radius-full);background:var(--bg-sunken);color:var(--text-4);border:1px solid var(--border);}
 
@@ -724,7 +727,55 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
 <div class="content" id="tab-restaurants" style="display:none">
   <div class="guide-must-note"><span>&#9733;</span> = Favorite &nbsp;·&nbsp; Tap to mark as visited</div>
   <div id="restContainer"></div>
+  <button id="addRestBtn" class="add-activity-btn private-only" onclick="openAddRestModal()" style="margin-top:8px;border-radius:var(--radius-md);border:1px solid var(--border);">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Add restaurant
+  </button>
   <div class="spacer"></div>
+</div>
+
+<!-- ADD RESTAURANT MODAL -->
+<div id="addRestModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);padding:24px;align-items:center;justify-content:center;">
+  <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:16px;padding:24px;max-width:360px;width:100%;box-shadow:var(--shadow-lg);">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:600;color:var(--text);">Add Restaurant</div>
+      <button id="addRestFavBtn" onclick="toggleAddRestFav()" title="Mark as favorite" style="background:none;border:none;cursor:pointer;padding:0;font-size:22px;line-height:1;color:var(--border);transition:color .2s,transform .2s;-webkit-tap-highlight-color:transparent;">★</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:5px;">Region <span style="color:var(--sage)">*</span></div>
+        <select id="addRestRegion" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:16px;outline:none;">
+          <option value="Banff">Banff</option>
+          <option value="Canmore">Canmore</option>
+        </select>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:5px;">Name <span style="color:var(--sage)">*</span></div>
+        <input id="addRestName" type="text" placeholder="Restaurant name" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:16px;outline:none;">
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:5px;">Tags <span style="color:var(--sage)">*</span> <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-4);font-size:10px;">(select at least one)</span></div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;" id="addRestTags">
+          <label class="rest-tag-pick"><input type="checkbox" value="Breakfast"> Breakfast</label>
+          <label class="rest-tag-pick"><input type="checkbox" value="Coffee"> Coffee</label>
+          <label class="rest-tag-pick"><input type="checkbox" value="Lunch"> Lunch</label>
+          <label class="rest-tag-pick"><input type="checkbox" value="Dinner"> Dinner</label>
+          <label class="rest-tag-pick"><input type="checkbox" value="Drinks"> Drinks</label>
+          <label class="rest-tag-pick"><input type="checkbox" value="Pizza"> Pizza</label>
+          <label class="rest-tag-pick"><input type="checkbox" value="Asian"> Asian</label>
+          <label class="rest-tag-pick"><input type="checkbox" value="Views"> Views</label>
+          <label class="rest-tag-pick"><input type="checkbox" value="Happy Hour"> Happy Hour</label>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:5px;">Notes</div>
+        <input id="addRestNotes" type="text" placeholder="Details, what to order..." style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:16px;outline:none;">
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:20px;">
+      <button onclick="closeAddRestModal()" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text-3);font-family:var(--font-ui);font-size:13px;font-weight:500;cursor:pointer;">Cancel</button>
+      <button onclick="saveNewRestaurant()" style="flex:2;padding:10px;border:none;border-radius:var(--radius-sm);background:var(--sage);color:var(--sage-ink);font-family:var(--font-ui);font-size:13px;font-weight:500;cursor:pointer;">Add Restaurant</button>
+    </div>
+  </div>
 </div>
 
 <!-- SHARE TAB -->
@@ -1449,7 +1500,61 @@ function updateUserIndicator(){
   ind.textContent=currentUser==='kevin'?'Kevin':'Sabrina';
 }
 
-/* ── RESTAURANT EDIT MODAL ───────────────────────────── */
+/* ── ADD RESTAURANT ──────────────────────────────────── */
+function openAddRestModal(){
+  document.getElementById('addRestName').value='';
+  document.getElementById('addRestNotes').value='';
+  document.getElementById('addRestRegion').value='Canmore';
+  document.querySelectorAll('#addRestTags input').forEach(cb=>cb.checked=false);
+  const favBtn=document.getElementById('addRestFavBtn');
+  favBtn._isFav=false;
+  favBtn.style.color='var(--border)';
+  document.getElementById('addRestModal').style.display='flex';
+  setTimeout(()=>document.getElementById('addRestName').focus(),100);
+}
+
+function closeAddRestModal(){
+  document.getElementById('addRestModal').style.display='none';
+}
+
+document.getElementById('addRestModal').addEventListener('click',e=>{
+  if(e.target===document.getElementById('addRestModal'))closeAddRestModal();
+});
+
+function toggleAddRestFav(){
+  const btn=document.getElementById('addRestFavBtn');
+  btn._isFav=!btn._isFav;
+  btn.style.color=btn._isFav?'var(--gold)':'var(--border)';
+  btn.style.transform='scale(1.3)';
+  setTimeout(()=>btn.style.transform='',200);
+}
+
+async function saveNewRestaurant(){
+  const name=document.getElementById('addRestName').value.trim();
+  if(!name)return document.getElementById('addRestName').focus();
+  const tags=[...document.querySelectorAll('#addRestTags input:checked')].map(cb=>cb.value);
+  if(!tags.length){
+    document.getElementById('addRestTags').style.outline='2px solid var(--sage)';
+    setTimeout(()=>document.getElementById('addRestTags').style.outline='',1500);
+    return;
+  }
+  const region=document.getElementById('addRestRegion').value;
+  const notes=document.getElementById('addRestNotes').value.trim();
+  const fav_label=document.getElementById('addRestFavBtn')._isFav?'Favorite':'';
+  const sort_order=(allRestaurants.filter(r=>r.region===region).length)+1;
+
+  try{
+    const res=await fetch(SUPABASE_URL+'/rest/v1/restaurants',{
+      method:'POST',
+      headers:{...SB_HEADERS,'Prefer':'return=representation'},
+      body:JSON.stringify({region,name,notes,fav_label,tags,sort_order,meta:''})
+    });
+    const [newRest]=await res.json();
+    allRestaurants.push(newRest);
+    closeAddRestModal();
+    renderRestaurants();
+  }catch(e){alert('Could not save. Try again.');}
+}
 let editingRestId=null;
 
 function openRestEditModal(id){
@@ -1577,10 +1682,22 @@ function applyVisitedState(){
   });
 }
 
+function getSortScore(r){
+  const t=(r.tags||[]).map(x=>x.toLowerCase());
+  if(r.fav_label)return 0;
+  if(t.includes('breakfast')||t.includes('coffee'))return 1;
+  if(t.includes('lunch'))return 2;
+  if(t.includes('dinner'))return 3;
+  return 4; // drinks-only, views-only, etc.
+}
+
 function renderRestaurants(){
   const container=document.getElementById('restContainer');
   if(!container)return;
   container.innerHTML='';
+  // show/hide add button based on view
+  const addBtn=document.getElementById('addRestBtn');
+  if(addBtn)addBtn.style.display=currentView==='family'?'none':'flex';
   const regions=[...new Set(allRestaurants.map(r=>r.region))];
   regions.forEach(region=>{
     const label=document.createElement('div');
@@ -1589,9 +1706,9 @@ function renderRestaurants(){
     container.appendChild(label);
     const list=document.createElement('div');
     list.className='rest-list';
-    allRestaurants.filter(r=>r.region===region).forEach(r=>{
-      list.appendChild(buildRestCard(r));
-    });
+    const regionRests=[...allRestaurants.filter(r=>r.region===region)]
+      .sort((a,b)=>getSortScore(a)-getSortScore(b)||a.sort_order-b.sort_order);
+    regionRests.forEach(r=>list.appendChild(buildRestCard(r)));
     container.appendChild(list);
   });
 }
@@ -1639,18 +1756,18 @@ function buildRestCard(r){
 
 function getRestIcon(tags){
   const t=(tags||[]).map(x=>x.toLowerCase());
-  if(t.includes('brewery')||t.includes('pub'))
-    return '<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 8h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2"/><rect x="2" y="6" width="15" height="12" rx="2"/></svg>';
-  if(t.includes('breakfast')||t.includes('coffee'))
-    return '<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>';
-  if(t.includes('views'))
-    return '<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>';
-  if(t.includes('drinks'))
-    return '<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg>';
-  if(t.includes('pizza'))
-    return '<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>';
-  // default fork & knife
-  return '<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>';
+  const hasFood=t.includes('lunch')||t.includes('dinner')||t.includes('pizza')||t.includes('asian')||t.includes('happy hour');
+  const isBreakfast=t.includes('breakfast')||t.includes('coffee');
+  const isDrinks=!hasFood&&(t.includes('drinks')||t.includes('brewery')||t.includes('pub')||t.includes('views'));
+
+  if(isBreakfast)
+    // coffee mug
+    return '<svg fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17 8h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2"/><rect x="2" y="6" width="15" height="12" rx="2"/><path d="M6 6V4"/><path d="M10 6V4"/></svg>';
+  if(isDrinks)
+    // beer mug
+    return '<svg fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 3h14l-2 13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 3z"/><path d="M19 5h1a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-1"/><path d="M9 12h6"/></svg>';
+  // fork and knife (food)
+  return '<svg fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>';
 }
 
 async function toggleVisited(el){
