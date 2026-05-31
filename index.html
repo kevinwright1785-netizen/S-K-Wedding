@@ -557,7 +557,10 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
 <!-- RESTAURANT EDIT MODAL -->
 <div id="restEditModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);padding:24px;align-items:center;justify-content:center;">
   <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:16px;padding:24px;max-width:360px;width:100%;box-shadow:var(--shadow-lg);">
-    <div id="restEditModalName" style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;"></div>
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px;">
+      <div id="restEditModalName" style="font-size:15px;font-weight:600;color:var(--text);flex:1;padding-right:12px;"></div>
+      <button id="restFavBtn" onclick="toggleRestFav()" title="Toggle favorite" style="background:none;border:none;cursor:pointer;padding:0;font-size:22px;line-height:1;color:var(--border);transition:color .2s,transform .2s;-webkit-tap-highlight-color:transparent;">★</button>
+    </div>
     <div style="font-size:11px;color:var(--text-4);margin-bottom:16px;">Notes are shared with both of you</div>
     <div>
       <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:5px;">Notes</div>
@@ -1455,9 +1458,21 @@ function openRestEditModal(id){
   if(!r)return;
   document.getElementById('restEditModalName').textContent=r.name;
   document.getElementById('restEditNotes').value=r.notes||'';
+  // set star state
+  const favBtn=document.getElementById('restFavBtn');
+  favBtn.style.color=r.fav_label?'var(--gold)':'var(--border)';
+  favBtn._isFav=!!r.fav_label;
   const m=document.getElementById('restEditModal');
   m.style.display='flex';
   setTimeout(()=>document.getElementById('restEditNotes').focus(),100);
+}
+
+function toggleRestFav(){
+  const btn=document.getElementById('restFavBtn');
+  btn._isFav=!btn._isFav;
+  btn.style.color=btn._isFav?'var(--gold)':'var(--border)';
+  btn.style.transform='scale(1.3)';
+  setTimeout(()=>btn.style.transform='',200);
 }
 
 function closeRestEditModal(){
@@ -1472,14 +1487,16 @@ document.getElementById('restEditModal').addEventListener('click',e=>{
 async function saveRestEdit(){
   if(!editingRestId)return;
   const notes=document.getElementById('restEditNotes').value.trim();
+  const favBtn=document.getElementById('restFavBtn');
+  const fav_label=favBtn._isFav?'Favorite':'';
   try{
     await fetch(SUPABASE_URL+'/rest/v1/restaurants?id=eq.'+editingRestId,{
       method:'PATCH',
       headers:SB_HEADERS,
-      body:JSON.stringify({notes})
+      body:JSON.stringify({notes,fav_label})
     });
     const idx=allRestaurants.findIndex(r=>r.id===editingRestId);
-    if(idx>-1)allRestaurants[idx]={...allRestaurants[idx],notes};
+    if(idx>-1)allRestaurants[idx]={...allRestaurants[idx],notes,fav_label};
     closeRestEditModal();
     renderRestaurants();
   }catch(e){alert('Could not save. Try again.');}
