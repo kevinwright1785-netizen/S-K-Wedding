@@ -136,6 +136,8 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
 .stagger{opacity:0;animation:up .45s ease forwards}
 .info-card-header{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);padding:11px 16px 9px;border-bottom:1px solid var(--border);background:var(--bg-sunken);}
 .info-card-header svg{color:var(--sage);}
+.info-card-edit-btn{background:none;border:none;cursor:pointer;color:var(--text-4);padding:2px;display:flex;align-items:center;transition:color var(--transition);-webkit-tap-highlight-color:transparent;}
+.info-card-edit-btn:hover{color:var(--sage);}
 .info-card-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:10px 16px;}
 .info-card-divider{height:1px;background:var(--border);margin:0 16px;}
 .modal-delete-btn{display:flex;align-items:center;justify-content:center;gap:5px;font-family:var(--font-ui);font-size:12px;font-weight:500;color:#C0392B;background:none;border:1px solid rgba(192,57,43,0.2);border-radius:var(--radius-sm);padding:8px 12px;cursor:pointer;transition:background var(--transition),border-color var(--transition);}
@@ -448,29 +450,26 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
 <div class="content" id="tab-itinerary">
   <div id="accomCard" class="private-only">
     <div class="info-cards-grid">
-      <div class="info-card">
-        <div class="info-card-header lodging-icon"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Lodging</div>
-        <div class="info-card-row"><div class="info-card-label">Airbnb &middot; Jul 9&ndash;18</div><div class="info-card-value">206 Spring Creek Drive<br>Canmore, AB T1W 3K3</div></div>
-        <div class="info-card-divider"></div>
-        <div class="info-card-row"><div class="info-card-label">Courtyard Marriott &middot; Jul 18&ndash;19</div><div class="info-card-value">525 5th Avenue SW<br>Calgary, AB T2P 1P7</div></div>
+      <div class="info-card" id="infoCard-lodging">
+        <div class="info-card-header lodging-icon" style="justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:7px;"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Lodging</div>
+          <button onclick="openTripInfoEdit('lodging')" class="info-card-edit-btn" title="Edit"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        </div>
+        <div id="infoRows-lodging"></div>
       </div>
-      <div class="info-card">
-        <div class="info-card-header car-icon"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v9a2 2 0 0 1-2 2h-2"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>Rental Car</div>
-        <div class="info-card-row"><div class="info-card-label">Company</div><div class="info-card-value">National &middot; Emerald Club</div></div>
-        <div class="info-card-divider"></div>
-        <div class="info-card-row"><div class="info-card-label">Confirmation</div><div class="info-card-value info-card-mono">2101227224</div></div>
-        <div class="info-card-divider"></div>
-        <div class="info-card-row"><div class="info-card-label">Pickup</div><div class="info-card-value">Thu Jul 9 &middot; 6:30 PM &middot; YYC</div></div>
-        <div class="info-card-divider"></div>
-        <div class="info-card-row"><div class="info-card-label">Return</div><div class="info-card-value">Sun Jul 19 &middot; 7:30 AM &middot; YYC</div></div>
+      <div class="info-card" id="infoCard-car">
+        <div class="info-card-header car-icon" style="justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:7px;"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v9a2 2 0 0 1-2 2h-2"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>Rental Car</div>
+          <button onclick="openTripInfoEdit('car')" class="info-card-edit-btn" title="Edit"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        </div>
+        <div id="infoRows-car"></div>
       </div>
-      <div class="info-card">
-        <div class="info-card-header flight-icon"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>Flights</div>
-        <div class="info-card-row"><div class="info-card-label">Carrier &middot; Confirmation</div><div class="info-card-value">WestJet &middot; <span class="info-card-mono">AUNJQW</span></div></div>
-        <div class="info-card-divider"></div>
-        <div class="info-card-row"><div class="info-card-label">Outbound &middot; Jul 9</div><div class="info-card-value"><div>MCO &rarr; YYZ &nbsp; 11:30 AM &ndash; 2:30 PM</div><div style="margin-top:5px;">YYZ &rarr; YYC &nbsp; 3:50 PM &ndash; 6:10 PM</div></div></div>
-        <div class="info-card-divider"></div>
-        <div class="info-card-row"><div class="info-card-label">Return &middot; Jul 19</div><div class="info-card-value">YYC &rarr; MCO &nbsp; 9:00 AM &ndash; 4:15 PM</div></div>
+      <div class="info-card" id="infoCard-flights">
+        <div class="info-card-header flight-icon" style="justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:7px;"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>Flights</div>
+          <button onclick="openTripInfoEdit('flights')" class="info-card-edit-btn" title="Edit"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        </div>
+        <div id="infoRows-flights"></div>
       </div>
     </div>
   </div>
@@ -478,6 +477,21 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
   <!-- dynamic day cards rendered by JS -->
   <div id="daysContainer"></div>
 
+</div>
+
+<!-- TRIP INFO EDIT MODAL -->
+<div id="tripInfoModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);padding:16px;align-items:flex-end;justify-content:center;">
+  <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:16px;padding:20px;max-width:420px;width:100%;box-shadow:var(--shadow-lg);max-height:82vh;display:flex;flex-direction:column;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-shrink:0;">
+      <div style="font-size:13px;font-weight:600;color:var(--text);" id="tripInfoModalTitle">Edit</div>
+      <button onclick="closeTripInfoModal()" style="background:none;border:none;font-size:20px;color:var(--text-4);cursor:pointer;padding:0;line-height:1;">×</button>
+    </div>
+    <div id="tripInfoModalBody" style="overflow-y:auto;flex:1;"></div>
+    <div style="display:flex;gap:8px;margin-top:16px;flex-shrink:0;">
+      <button onclick="closeTripInfoModal()" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text-3);font-family:var(--font-ui);font-size:13px;font-weight:500;cursor:pointer;">Cancel</button>
+      <button onclick="saveTripInfo()" style="flex:2;padding:10px;border:none;border-radius:var(--radius-sm);background:var(--sage);color:var(--sage-ink);font-family:var(--font-ui);font-size:13px;font-weight:500;cursor:pointer;">Save changes</button>
+    </div>
+  </div>
 </div>
 
 <!-- ADD ACTIVITY MODAL -->
@@ -1551,7 +1565,228 @@ function updateUserIndicator(){
   ind.textContent=currentUser==='kevin'?'Kevin':'Sabrina';
 }
 
-/* ── DAY EDIT MODAL ──────────────────────────────────── */
+/* ── TRIP INFO ───────────────────────────────────────── */
+let tripInfoData=[];
+let editingTripSection=null;
+
+async function loadTripInfo(){
+  try{
+    const res=await fetch(SUPABASE_URL+'/rest/v1/trip_info?select=*&order=section,sort_order',{headers:SB_HEADERS});
+    tripInfoData=await res.json();
+  }catch(e){tripInfoData=[];}
+  renderTripInfo();
+}
+
+function renderTripInfo(){
+  ['lodging','car','flights'].forEach(section=>{
+    const container=document.getElementById('infoRows-'+section);
+    if(!container)return;
+    container.innerHTML='';
+    const rows=tripInfoData.filter(r=>r.section===section).sort((a,b)=>a.sort_order-b.sort_order);
+    rows.forEach((row,i)=>{
+      if(i>0){const d=document.createElement('div');d.className='info-card-divider';container.appendChild(d);}
+      const el=document.createElement('div');
+      el.className='info-card-row';
+      let valHtml='';
+      if(row.value_type==='mono'){
+        valHtml=`<div class="info-card-value info-card-mono">${row.value}</div>`;
+      } else if(row.value_type==='flight'){
+        // each line is a separate leg
+        const lines=row.value.split('\n').filter(l=>l.trim());
+        const linesHtml=lines.map((l,li)=>li===0?l:`<div style="margin-top:4px;">${l}</div>`).join('');
+        valHtml=`<div class="info-card-value">${linesHtml}</div>`;
+      } else {
+        valHtml=`<div class="info-card-value">${row.value.replace(/\n/g,'<br>')}</div>`;
+      }
+      el.innerHTML=`<div class="info-card-label">${row.label}</div>${valHtml}`;
+      container.appendChild(el);
+    });
+  });
+}
+
+// ── FIELD HELPER ─────────────────────────────────────
+function tripField(label,id,value,placeholder=''){
+  return `<div style="margin-bottom:10px;">
+    <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:4px;">${label}</div>
+    <input id="${id}" type="text" value="${(value||'').replace(/"/g,'&quot;')}" placeholder="${placeholder}" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:16px;outline:none;box-sizing:border-box;">
+  </div>`;
+}
+
+function tripSelect(label,id,value,options){
+  const opts=options.map(o=>`<option value="${o}"${o===value?' selected':''}>${o}</option>`).join('');
+  return `<div style="margin-bottom:10px;">
+    <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:4px;">${label}</div>
+    <select id="${id}" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:16px;outline:none;">${opts}</select>
+  </div>`;
+}
+
+function sectionDivider(label){
+  return `<div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin:14px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--border);">${label}</div>`;
+}
+
+function addBtn(onclick,label){
+  return `<button onclick="${onclick}" style="display:flex;align-items:center;gap:6px;padding:8px 12px;border:1px dashed var(--border);border-radius:var(--radius-sm);background:none;color:var(--text-4);font-family:var(--font-ui);font-size:12px;cursor:pointer;margin-top:4px;margin-bottom:12px;">
+    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> ${label}
+  </button>`;
+}
+
+function deleteRowBtn(id){
+  return `<button onclick="document.getElementById('${id}').remove()" style="position:absolute;top:8px;right:0;background:none;border:none;cursor:pointer;color:var(--text-4);padding:4px;-webkit-tap-highlight-color:transparent;">
+    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+  </button>`;
+}
+
+// ── LODGING MODAL ─────────────────────────────────────
+function buildLodgingModal(){
+  const rows=tripInfoData.filter(r=>r.section==='lodging').sort((a,b)=>a.sort_order-b.sort_order);
+  // parse stored values back — label = "Airbnb · Jul 9–18", value = address
+  let html=`<div id="lodgingRows">`;
+  rows.forEach((r,i)=>{
+    const parts=r.label.split(' · ');
+    const type=parts[0]||'Airbnb';
+    const dates=parts.slice(1).join(' · ')||'';
+    html+=`<div id="lodgingRow-${i}" style="position:relative;padding-right:24px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 30px 10px 12px;margin-bottom:8px;">
+      ${deleteRowBtn('lodgingRow-'+i)}
+      ${tripSelect('Type','lodgingType-'+i,type,['Airbnb','Hotel','Vrbo','Condo','Other'])}
+      ${tripField('Dates','lodgingDates-'+i,dates,'e.g. Jul 9–18')}
+      ${tripField('Address','lodgingAddr-'+i,r.value,'Street address, City, Province')}
+    </div>`;
+  });
+  html+=`</div>${addBtn('addLodgingRow()','Add property')}`;
+  return html;
+}
+
+let lodgingCount=0;
+function addLodgingRow(){
+  lodgingCount++;
+  const id='lodgingRowNew-'+lodgingCount;
+  const div=document.createElement('div');
+  div.id=id;
+  div.style.cssText='position:relative;border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 30px 10px 12px;margin-bottom:8px;';
+  div.innerHTML=deleteRowBtn(id)
+    +tripSelect('Type','lodgingType-'+id,'Airbnb',['Airbnb','Hotel','Vrbo','Condo','Other'])
+    +tripField('Dates','lodgingDates-'+id,'','e.g. Jul 9–18')
+    +tripField('Address','lodgingAddr-'+id,'','Street address, City, Province');
+  document.getElementById('lodgingRows').appendChild(div);
+}
+
+// ── CAR MODAL ─────────────────────────────────────────
+function buildCarModal(){
+  const byLabel={};
+  tripInfoData.filter(r=>r.section==='car').forEach(r=>{byLabel[r.label]=r;});
+  return tripField('Company','carCompany',byLabel['Company']?.value||'','e.g. National · Emerald Club')
+    +tripField('Confirmation #','carConfirm',byLabel['Confirmation']?.value||'')
+    +tripField('Pickup','carPickup',byLabel['Pickup']?.value||'','e.g. Thu Jul 9 · 6:30 PM · YYC')
+    +tripField('Return','carReturn',byLabel['Return']?.value||'','e.g. Sun Jul 19 · 7:30 AM · YYC');
+}
+
+// ── FLIGHTS MODAL ─────────────────────────────────────
+function buildFlightsModal(){
+  const rows=tripInfoData.filter(r=>r.section==='flights').sort((a,b)=>a.sort_order-b.sort_order);
+  const carrier=rows.find(r=>r.label==='Carrier · Confirmation');
+  const legs=rows.filter(r=>r.label!=='Carrier · Confirmation');
+  let html=sectionDivider('Carrier');
+  html+=tripField('Carrier','flightCarrier',carrier?.value?.split(' · ')[0]||'','e.g. WestJet');
+  html+=tripField('Confirmation #','flightConfirm',carrier?.value?.split(' · ')[1]||'');
+  html+=sectionDivider('Flight Groups');
+  html+=`<div style="font-size:11px;color:var(--text-4);margin-bottom:8px;">Each group can contain multiple legs. Use a new line per leg.</div>`;
+  html+=`<div id="flightLegs">`;
+  legs.forEach((r,i)=>{
+    const id='flightLeg-'+i;
+    html+=`<div id="${id}" style="position:relative;border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 30px 10px 12px;margin-bottom:8px;">
+      ${deleteRowBtn(id)}
+      ${tripField('Label','flightLabel-'+i,r.label,'e.g. Outbound · Jul 9')}
+      <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:4px;">Legs (one per line, route + times)</div>
+      <textarea id="flightValue-${i}" rows="3" placeholder="MCO → YYZ  11:30 AM – 2:30 PM&#10;YYZ → YYC  3:50 PM – 6:10 PM" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:14px;outline:none;resize:none;line-height:1.5;box-sizing:border-box;">${r.value||''}</textarea>
+    </div>`;
+  });
+  html+=`</div>${addBtn('addFlightLeg()','Add flight group')}`;
+  return html;
+}
+
+let flightLegCount=0;
+function addFlightLeg(){
+  flightLegCount++;
+  const i='New-'+flightLegCount;
+  const id='flightLeg-'+i;
+  const div=document.createElement('div');
+  div.id=id;
+  div.style.cssText='position:relative;border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 30px 10px 12px;margin-bottom:8px;';
+  div.innerHTML=deleteRowBtn(id)
+    +tripField('Label','flightLabel-'+i,'','e.g. Return · Jul 19')
+    +`<div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:4px;">Legs (one per line)</div>
+    <textarea id="flightValue-${i}" rows="2" placeholder="YYC → MCO  9:00 AM – 4:15 PM" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:14px;outline:none;resize:none;line-height:1.5;box-sizing:border-box;"></textarea>`;
+  document.getElementById('flightLegs').appendChild(div);
+}
+
+// ── OPEN/CLOSE ────────────────────────────────────────
+function openTripInfoEdit(section){
+  editingTripSection=section;
+  const titles={lodging:'Edit Lodging',car:'Edit Rental Car',flights:'Edit Flights'};
+  document.getElementById('tripInfoModalTitle').textContent=titles[section];
+  const body=document.getElementById('tripInfoModalBody');
+  if(section==='lodging')body.innerHTML=buildLodgingModal();
+  else if(section==='car')body.innerHTML=buildCarModal();
+  else if(section==='flights')body.innerHTML=buildFlightsModal();
+  document.getElementById('tripInfoModal').style.display='flex';
+}
+
+function closeTripInfoModal(){
+  document.getElementById('tripInfoModal').style.display='none';
+  editingTripSection=null;
+}
+
+document.getElementById('tripInfoModal').addEventListener('click',e=>{
+  if(e.target===document.getElementById('tripInfoModal'))closeTripInfoModal();
+});
+
+// ── SAVE ─────────────────────────────────────────────
+async function saveTripInfo(){
+  let rows=[];
+  if(editingTripSection==='lodging'){
+    const containers=[...document.querySelectorAll('#lodgingRows > div')];
+    containers.forEach((el,i)=>{
+      const idPfx=el.id.replace('lodgingRow-','').replace('lodgingRowNew-','');
+      const type=el.querySelector('[id^="lodgingType"]')?.value||'';
+      const dates=el.querySelector('[id^="lodgingDates"]')?.value.trim()||'';
+      const addr=el.querySelector('[id^="lodgingAddr"]')?.value.trim()||'';
+      if(type||addr)rows.push({section:'lodging',label:type+(dates?' · '+dates:''),value:addr,value_type:'address',sort_order:i+1});
+    });
+  } else if(editingTripSection==='car'){
+    const company=document.getElementById('carCompany')?.value.trim()||'';
+    const confirm=document.getElementById('carConfirm')?.value.trim()||'';
+    const pickup=document.getElementById('carPickup')?.value.trim()||'';
+    const ret=document.getElementById('carReturn')?.value.trim()||'';
+    if(company)rows.push({section:'car',label:'Company',value:company,value_type:'text',sort_order:1});
+    if(confirm)rows.push({section:'car',label:'Confirmation',value:confirm,value_type:'mono',sort_order:2});
+    if(pickup)rows.push({section:'car',label:'Pickup',value:pickup,value_type:'text',sort_order:3});
+    if(ret)rows.push({section:'car',label:'Return',value:ret,value_type:'text',sort_order:4});
+  } else if(editingTripSection==='flights'){
+    const carrier=document.getElementById('flightCarrier')?.value.trim()||'';
+    const confirm=document.getElementById('flightConfirm')?.value.trim()||'';
+    if(carrier)rows.push({section:'flights',label:'Carrier · Confirmation',value:carrier+(confirm?' · '+confirm:''),value_type:'text',sort_order:1});
+    const legs=[...document.querySelectorAll('#flightLegs > div')];
+    legs.forEach((el,i)=>{
+      const labelEl=el.querySelector('[id^="flightLabel"]');
+      const valueEl=el.querySelector('[id^="flightValue"]');
+      const label=(labelEl?.value||'').trim();
+      const value=(valueEl?.value||'').trim();
+      if(label||value)rows.push({section:'flights',label:label||('Group '+(i+1)),value,value_type:'flight',sort_order:i+2});
+    });
+  }
+
+  try{
+    await fetch(SUPABASE_URL+'/rest/v1/trip_info?section=eq.'+editingTripSection,{method:'DELETE',headers:SB_HEADERS});
+    if(rows.length){
+      await fetch(SUPABASE_URL+'/rest/v1/trip_info',{
+        method:'POST',headers:{...SB_HEADERS,'Prefer':'return=representation'},
+        body:JSON.stringify(rows)
+      });
+    }
+    await loadTripInfo();
+    closeTripInfoModal();
+  }catch(e){alert('Could not save. Try again.');}
+}
 let editingDayId=null;
 
 const ALL_BADGES=[
@@ -2350,10 +2585,12 @@ loadDays().then(()=>{
       loadAndRenderItinerary().then(()=>restoreCheckedState());
       loadRestaurantVisits();
       loadChecklist();
+      loadTripInfo();
     } else {
       loadAndRenderItinerary();
       loadRestaurantVisits();
       loadChecklist();
+      loadTripInfo();
       showUserPicker();
     }
   }
