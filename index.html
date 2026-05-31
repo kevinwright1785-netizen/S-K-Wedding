@@ -433,6 +433,7 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
     <button class="tabnav-btn" onclick="switchTab('guide')">Guide</button>
     <button class="tabnav-btn" onclick="switchTab('restaurants')">Restaurants</button>
     <button class="tabnav-btn private-only" onclick="switchTab('journal')">Journal</button>
+    <button class="tabnav-btn private-only" onclick="switchTab('checklist')">Checklist</button>
     <button class="tabnav-btn" onclick="switchTab('share')">Share</button>
   </div>
 </div>
@@ -684,42 +685,6 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
     </div>
   </div>
 
-  <div class="guide-region">
-    <div class="guide-region-header">
-      <div class="guide-region-title">Eat</div>
-      <span class="guide-region-badge">Appetite</span>
-    </div>
-    <div class="guide-columns">
-      <div class="guide-eats-card">
-        <div class="guide-eats-grid">
-          <div>
-            <div class="guide-eats-col-title">Banff Area</div>
-            <div class="guide-eats-section">Breakfast</div>
-            <div class="guide-eats-item"><span style="width:10px;flex-shrink:0"></span><span>Coyotes</span></div>
-            <div class="guide-eats-section">Lunch / Dinner</div>
-            <div class="guide-eats-item"><span class="guide-item-star">&#9733;</span><span>Three Bears Brewery</span></div>
-            <div class="guide-eats-item"><span class="guide-item-star">&#9733;</span><span>Park Distillery</span></div>
-            <div class="guide-eats-item"><span style="width:10px;flex-shrink:0"></span><span>Eddie&rsquo;s Burger Bar</span></div>
-            <div class="guide-eats-item"><span style="width:10px;flex-shrink:0"></span><span>Block Kitchen + Bar</span></div>
-            <div class="guide-eats-item"><span style="width:10px;flex-shrink:0"></span><span>MacLab Bistro</span></div>
-          </div>
-          <div>
-            <div class="guide-eats-col-title">Canmore Area</div>
-            <div class="guide-eats-section">Breakfast</div>
-            <div class="guide-eats-item"><span style="width:10px;flex-shrink:0"></span><span>Rocky Mountain Bagel</span></div>
-            <div class="guide-eats-item"><span style="width:10px;flex-shrink:0"></span><span>Eclipse Coffee</span></div>
-            <div class="guide-eats-section">Lunch / Dinner</div>
-            <div class="guide-eats-item"><span class="guide-item-star">&#9733;</span><span>Grizzly Paw Pub</span></div>
-            <div class="guide-eats-item"><span class="guide-item-star">&#9733;</span><span>The Local</span></div>
-            <div class="guide-eats-item"><span class="guide-item-star">&#9733;</span><span>Muriettas</span></div>
-            <div class="guide-eats-section">Fast Food</div>
-            <div class="guide-eats-item"><span style="width:10px;flex-shrink:0"></span><span>Canadian Pizza Unlimited</span></div>
-            <div class="guide-eats-item"><span style="width:10px;flex-shrink:0"></span><span>Edo Japan</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="spacer"></div>
 </div>
 
@@ -774,6 +739,43 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
     <div style="display:flex;gap:8px;margin-top:20px;">
       <button onclick="closeAddRestModal()" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text-3);font-family:var(--font-ui);font-size:13px;font-weight:500;cursor:pointer;">Cancel</button>
       <button onclick="saveNewRestaurant()" style="flex:2;padding:10px;border:none;border-radius:var(--radius-sm);background:var(--sage);color:var(--sage-ink);font-family:var(--font-ui);font-size:13px;font-weight:500;cursor:pointer;">Add Restaurant</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKLIST TAB -->
+<div class="content private-only" id="tab-checklist" style="display:none">
+  <div style="font-size:11px;color:var(--text-4);margin-bottom:14px;display:flex;align-items:center;gap:5px;">
+    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    Shared between Kevin &amp; Sabrina
+  </div>
+  <div id="checklistContainer"></div>
+  <button class="add-activity-btn" onclick="openChecklistAddModal()" style="margin-top:8px;border-radius:var(--radius-md);border:1px solid var(--border);">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Add item
+  </button>
+  <div class="spacer"></div>
+</div>
+
+<!-- CHECKLIST ITEM MODAL -->
+<div id="checklistModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);padding:24px;align-items:center;justify-content:center;">
+  <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:16px;padding:24px;max-width:360px;width:100%;box-shadow:var(--shadow-lg);">
+    <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:16px;" id="checklistModalTitle">Add Item</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:5px;">Item <span style="color:var(--sage)">*</span></div>
+        <input id="checklistItemName" type="text" placeholder="e.g. Bear spray, Hiking boots..." style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:16px;outline:none;">
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:5px;">Notes</div>
+        <input id="checklistItemNotes" type="text" placeholder="Optional details..." style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:16px;outline:none;">
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:20px;align-items:center;">
+      <button id="checklistDeleteBtn" onclick="deleteChecklistItem()" class="modal-delete-btn" style="display:none;">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+      </button>
+      <button onclick="closeChecklistModal()" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text-3);font-family:var(--font-ui);font-size:13px;font-weight:500;cursor:pointer;">Cancel</button>
+      <button onclick="saveChecklistItem()" style="flex:2;padding:10px;border:none;border-radius:var(--radius-sm);background:var(--sage);color:var(--sage-ink);font-family:var(--font-ui);font-size:13px;font-weight:500;cursor:pointer;" id="checklistSaveBtn">Add Item</button>
     </div>
   </div>
 </div>
@@ -883,7 +885,7 @@ function toggleTheme(){
   if(big)big.textContent=diff>0?diff:'0';
 })();
 
-const TABS=['itinerary','overview','guide','restaurants','journal','share'];
+const TABS=['itinerary','overview','guide','restaurants','journal','checklist','share'];
 let currentTab='itinerary';
 function switchTab(tab){
   currentTab=tab;
@@ -907,6 +909,10 @@ function switchTab(tab){
   if(tab==='restaurants'){
     if(restaurantsLoaded)renderRestaurants();
     else loadRestaurantVisits();
+  }
+  if(tab==='checklist'){
+    if(checklistLoaded)renderChecklist();
+    else loadChecklist();
   }
 }
 
@@ -1500,7 +1506,155 @@ function updateUserIndicator(){
   ind.textContent=currentUser==='kevin'?'Kevin':'Sabrina';
 }
 
-/* ── ADD RESTAURANT ──────────────────────────────────── */
+/* ── TRIP CHECKLIST ──────────────────────────────────── */
+let checklistItems=[];
+let checklistLoaded=false;
+let editingChecklistId=null;
+
+async function loadChecklist(){
+  try{
+    const res=await fetch(SUPABASE_URL+'/rest/v1/trip_checklist?select=*&order=sort_order',{headers:SB_HEADERS});
+    checklistItems=await res.json();
+  }catch(e){checklistItems=[];}
+  renderChecklist();
+  checklistLoaded=true;
+}
+
+function renderChecklist(){
+  const container=document.getElementById('checklistContainer');
+  if(!container)return;
+  container.innerHTML='';
+  if(!checklistItems.length){
+    const empty=document.createElement('div');
+    empty.style.cssText='font-size:12px;color:var(--text-4);text-align:center;padding:24px;font-style:italic;';
+    empty.textContent='No items yet — add things to pack or do before the trip';
+    container.appendChild(empty);
+    return;
+  }
+  checklistItems.forEach(item=>{
+    const el=document.createElement('div');
+    el.className='activity'+(item.checked?' checked':'');
+    el.dataset.checklistId=item.id;
+    el.innerHTML=`
+      <div class="act-cb" onclick="toggleChecklistItem('${item.id}')">
+        <svg class="act-cb-check" width="9" height="9" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+      </div>
+      <div class="act-content">
+        <div class="act-name">${item.name}</div>
+        ${item.notes?'<div class="act-detail">'+item.notes+'</div>':''}
+      </div>
+      <div class="act-right-btns">
+        <button class="act-edit-btn" onclick="openChecklistEditModal('${item.id}')" title="Edit">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
+      </div>`;
+    container.appendChild(el);
+  });
+}
+
+async function toggleChecklistItem(id){
+  const item=checklistItems.find(i=>i.id===id);
+  if(!item)return;
+  item.checked=!item.checked;
+  renderChecklist();
+  try{
+    await fetch(SUPABASE_URL+'/rest/v1/trip_checklist?id=eq.'+id,{
+      method:'PATCH',headers:SB_HEADERS,
+      body:JSON.stringify({checked:item.checked,updated_at:new Date().toISOString()})
+    });
+  }catch(e){console.error('Checklist toggle error:',e);}
+}
+
+function openChecklistAddModal(){
+  editingChecklistId=null;
+  document.getElementById('checklistModalTitle').textContent='Add Item';
+  document.getElementById('checklistSaveBtn').textContent='Add Item';
+  document.getElementById('checklistItemName').value='';
+  document.getElementById('checklistItemNotes').value='';
+  document.getElementById('checklistDeleteBtn').style.display='none';
+  document.getElementById('checklistModal').style.display='flex';
+  setTimeout(()=>document.getElementById('checklistItemName').focus(),100);
+}
+
+function openChecklistEditModal(id){
+  const item=checklistItems.find(i=>i.id===id);
+  if(!item)return;
+  editingChecklistId=id;
+  document.getElementById('checklistModalTitle').textContent='Edit Item';
+  document.getElementById('checklistSaveBtn').textContent='Save Changes';
+  document.getElementById('checklistItemName').value=item.name;
+  document.getElementById('checklistItemNotes').value=item.notes||'';
+  document.getElementById('checklistDeleteBtn').style.display='flex';
+  document.getElementById('checklistModal').style.display='flex';
+  setTimeout(()=>document.getElementById('checklistItemName').focus(),100);
+}
+
+function closeChecklistModal(){
+  document.getElementById('checklistModal').style.display='none';
+  editingChecklistId=null;
+}
+
+document.getElementById('checklistModal').addEventListener('click',e=>{
+  if(e.target===document.getElementById('checklistModal'))closeChecklistModal();
+});
+
+async function saveChecklistItem(){
+  const name=document.getElementById('checklistItemName').value.trim();
+  if(!name)return document.getElementById('checklistItemName').focus();
+  const notes=document.getElementById('checklistItemNotes').value.trim();
+  if(editingChecklistId){
+    // edit
+    try{
+      await fetch(SUPABASE_URL+'/rest/v1/trip_checklist?id=eq.'+editingChecklistId,{
+        method:'PATCH',headers:SB_HEADERS,
+        body:JSON.stringify({name,notes,updated_at:new Date().toISOString()})
+      });
+      const idx=checklistItems.findIndex(i=>i.id===editingChecklistId);
+      if(idx>-1)checklistItems[idx]={...checklistItems[idx],name,notes};
+      closeChecklistModal();
+      renderChecklist();
+    }catch(e){alert('Could not save. Try again.');}
+  } else {
+    // add
+    const sort_order=checklistItems.length+1;
+    try{
+      const res=await fetch(SUPABASE_URL+'/rest/v1/trip_checklist',{
+        method:'POST',
+        headers:{...SB_HEADERS,'Prefer':'return=representation'},
+        body:JSON.stringify({name,notes,sort_order,checked:false})
+      });
+      const [newItem]=await res.json();
+      checklistItems.push(newItem);
+      closeChecklistModal();
+      renderChecklist();
+    }catch(e){alert('Could not save. Try again.');}
+  }
+}
+
+async function deleteChecklistItem(){
+  if(!editingChecklistId)return;
+  const btn=document.getElementById('checklistDeleteBtn');
+  if(btn._confirming){
+    try{
+      await fetch(SUPABASE_URL+'/rest/v1/trip_checklist?id=eq.'+editingChecklistId,{
+        method:'DELETE',headers:SB_HEADERS
+      });
+      checklistItems=checklistItems.filter(i=>i.id!==editingChecklistId);
+      closeChecklistModal();
+      renderChecklist();
+    }catch(e){alert('Could not delete. Try again.');}
+  } else {
+    btn._confirming=true;
+    btn.style.background='rgba(192,57,43,0.08)';btn.style.borderColor='rgba(192,57,43,0.5)';
+    btn.innerHTML='<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg> Confirm?';
+    setTimeout(()=>{
+      if(btn._confirming){
+        btn._confirming=false;btn.style.background='';btn.style.borderColor='';
+        btn.innerHTML='<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>';
+      }
+    },3000);
+  }
+}
 function openAddRestModal(){
   document.getElementById('addRestName').value='';
   document.getElementById('addRestNotes').value='';
@@ -2002,10 +2156,12 @@ if(new URLSearchParams(location.search).get('view')==='family'){
   if(currentUser){
     updateUserIndicator();
     loadAndRenderItinerary().then(()=>restoreCheckedState());
-    loadRestaurantVisits(); // prefetch in background
+    loadRestaurantVisits();
+    loadChecklist();
   } else {
     loadAndRenderItinerary();
-    loadRestaurantVisits(); // prefetch in background
+    loadRestaurantVisits();
+    loadChecklist();
     showUserPicker();
   }
 }
