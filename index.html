@@ -1595,7 +1595,7 @@ function buildRestCard(r){
       <div class="rest-icon-wrap">${getRestIcon(r.tags)}</div>
       <div class="rest-body">
         <div class="rest-name">${r.name}</div>
-        <div class="rest-meta">${r.meta||''}${r.notes?'<div class="rest-notes">'+r.notes+'</div>':''}</div>
+        ${r.notes?'<div class="rest-meta">'+r.notes+'</div>':''}
       </div>
       <div class="rest-right">
         ${favHtml}
@@ -1606,7 +1606,7 @@ function buildRestCard(r){
       <div class="rest-icon-wrap" onclick="toggleVisited(this.closest('.rest-card'))">${getRestIcon(r.tags)}</div>
       <div class="rest-body" onclick="toggleVisited(this.closest('.rest-card'))">
         <div class="rest-name">${r.name}</div>
-        <div class="rest-meta">${r.meta||''}${r.notes?'<div class="rest-notes">'+r.notes+'</div>':''}</div>
+        ${r.notes?'<div class="rest-meta">'+r.notes+'</div>':''}
       </div>
       <div class="rest-right">
         ${favHtml}
