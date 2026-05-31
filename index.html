@@ -385,6 +385,12 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
 .add-activity-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px 14px;font-family:var(--font-ui);font-size:12px;font-weight:500;color:var(--text-4);background:none;border:none;border-top:1px solid var(--border);cursor:pointer;transition:color var(--transition),background var(--transition);-webkit-tap-highlight-color:transparent;}
 .add-activity-btn:hover{color:var(--sage);background:var(--sage-soft);}
 .add-activity-btn svg{width:13px;height:13px;}
+.edit-day-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:8px 14px;font-family:var(--font-ui);font-size:11px;font-weight:500;color:var(--text-4);background:none;border:none;border-top:1px solid var(--border);cursor:pointer;transition:color var(--transition),background var(--transition);-webkit-tap-highlight-color:transparent;letter-spacing:.02em;}
+.edit-day-btn:hover{color:var(--sage);background:var(--sage-soft);}
+.edit-day-btn svg{width:11px;height:11px;}
+.day-badge-chip{font-size:11px;font-weight:500;padding:5px 11px;border-radius:var(--radius-full);border:1px solid var(--border);background:var(--bg-sunken);color:var(--text-3);cursor:pointer;font-family:var(--font-ui);transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.day-badge-chip.active{background:var(--sage-soft);border-color:var(--sage);color:var(--sage);}
+.day-badge-chip:hover{border-color:var(--sage-border);}
 </style>
 </head>
 <body>
@@ -576,6 +582,32 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size
       </button>
       <button onclick="closeRestEditModal()" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text-3);font-family:var(--font-ui);font-size:13px;font-weight:500;cursor:pointer;">Cancel</button>
       <button onclick="saveRestEdit()" style="flex:2;padding:10px;border:none;border-radius:var(--radius-sm);background:var(--sage);color:var(--sage-ink);font-family:var(--font-ui);font-size:13px;font-weight:500;cursor:pointer;">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- DAY EDIT MODAL -->
+<div id="dayEditModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);padding:24px;align-items:center;justify-content:center;">
+  <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:16px;padding:24px;max-width:360px;width:100%;box-shadow:var(--shadow-lg);">
+    <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;">Edit day</div>
+    <div style="font-size:11px;color:var(--text-4);margin-bottom:16px;">Changes shared between Kevin &amp; Sabrina</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:5px;">Title</div>
+        <input id="dayEditTitle" type="text" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:16px;outline:none;">
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:5px;">Subtitle</div>
+        <input id="dayEditSubtitle" type="text" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text);font-family:var(--font-ui);font-size:16px;outline:none;">
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:7px;">Badges</div>
+        <div id="dayEditBadges" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:20px;">
+      <button onclick="closeDayEditModal()" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-sunken);color:var(--text-3);font-family:var(--font-ui);font-size:13px;font-weight:500;cursor:pointer;">Cancel</button>
+      <button onclick="saveDayEdit()" style="flex:2;padding:10px;border:none;border-radius:var(--radius-sm);background:var(--sage);color:var(--sage-ink);font-family:var(--font-ui);font-size:13px;font-weight:500;cursor:pointer;">Save changes</button>
     </div>
   </div>
 </div>
@@ -1137,6 +1169,13 @@ function buildDayCard(d,di,activities){
     addBtn.innerHTML='<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Add activity';
     addBtn.onclick=(e)=>{e.stopPropagation();openModal(d.date);};
     body.appendChild(addBtn);
+
+    // edit day details link
+    const editDayBtn=document.createElement('button');
+    editDayBtn.className='edit-day-btn';
+    editDayBtn.innerHTML='<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit day details';
+    editDayBtn.onclick=(e)=>{e.stopPropagation();openDayEditModal(d.id);};
+    body.appendChild(editDayBtn);
   }
 
   card.appendChild(body);
@@ -1512,7 +1551,89 @@ function updateUserIndicator(){
   ind.textContent=currentUser==='kevin'?'Kevin':'Sabrina';
 }
 
-/* ── TRIP CHECKLIST ──────────────────────────────────── */
+/* ── DAY EDIT MODAL ──────────────────────────────────── */
+let editingDayId=null;
+
+const ALL_BADGES=[
+  {cls:'badge-us',     lbl:'Us Only'},
+  {cls:'badge-private',lbl:'Private'},
+  {cls:'badge-tbd',    lbl:'TBD Who Joins'},
+  {cls:'badge-wedding',lbl:'Wedding'},
+  {cls:'badge-family', lbl:"Peggy's Crew"},
+  {cls:'badge-family', lbl:"Sabrina's Family"},
+  {cls:'badge-family', lbl:'Laura + Bill'},
+  {cls:'badge-all',    lbl:'All Family'},
+];
+
+function openDayEditModal(dayId){
+  editingDayId=dayId;
+  const d=DAYS.find(d=>d.id===dayId);
+  if(!d)return;
+  document.getElementById('dayEditTitle').value=d.title;
+  document.getElementById('dayEditSubtitle').value=d.sub;
+
+  // build badge chips
+  const container=document.getElementById('dayEditBadges');
+  container.innerHTML='';
+  const currentBadgeLabels=d.badges.map(b=>b.lbl);
+  ALL_BADGES.forEach(b=>{
+    const chip=document.createElement('button');
+    chip.className='day-badge-chip'+(currentBadgeLabels.includes(b.lbl)?' active':'');
+    chip.dataset.cls=b.cls;
+    chip.dataset.lbl=b.lbl;
+    chip.textContent=b.lbl;
+    chip.onclick=()=>chip.classList.toggle('active');
+    container.appendChild(chip);
+  });
+
+  document.getElementById('dayEditModal').style.display='flex';
+  setTimeout(()=>document.getElementById('dayEditTitle').focus(),100);
+}
+
+function closeDayEditModal(){
+  document.getElementById('dayEditModal').style.display='none';
+  editingDayId=null;
+}
+
+document.getElementById('dayEditModal').addEventListener('click',e=>{
+  if(e.target===document.getElementById('dayEditModal'))closeDayEditModal();
+});
+
+async function saveDayEdit(){
+  if(!editingDayId)return;
+  const title=document.getElementById('dayEditTitle').value.trim();
+  if(!title)return document.getElementById('dayEditTitle').focus();
+  const subtitle=document.getElementById('dayEditSubtitle').value.trim();
+  const activeChips=[...document.querySelectorAll('#dayEditBadges .day-badge-chip.active')];
+  const badges=activeChips.map(c=>({cls:c.dataset.cls,lbl:c.dataset.lbl}));
+
+  try{
+    // update days table
+    await fetch(SUPABASE_URL+'/rest/v1/days?id=eq.'+editingDayId,{
+      method:'PATCH',headers:SB_HEADERS,
+      body:JSON.stringify({title,subtitle})
+    });
+    // delete existing badges and reinsert
+    await fetch(SUPABASE_URL+'/rest/v1/day_badges?day_id=eq.'+editingDayId,{
+      method:'DELETE',headers:SB_HEADERS
+    });
+    if(badges.length){
+      await fetch(SUPABASE_URL+'/rest/v1/day_badges',{
+        method:'POST',headers:SB_HEADERS,
+        body:JSON.stringify(badges.map((b,i)=>({day_id:editingDayId,label:b.lbl,css_class:b.cls,sort_order:i+1})))
+      });
+    }
+    // update local DAYS array
+    const idx=DAYS.findIndex(d=>d.id===editingDayId);
+    if(idx>-1)DAYS[idx]={...DAYS[idx],title,sub:subtitle,badges};
+    closeDayEditModal();
+    // preserve open cards and re-render
+    const openCards=new Set([...document.querySelectorAll('.day-card.open')].map(c=>c.id));
+    renderItinerary();
+    openCards.forEach(id=>{const c=document.getElementById(id);if(c)c.classList.add('open');});
+    restoreCheckedState();
+  }catch(e){alert('Could not save. Try again.');}
+}
 let checklistItems=[];
 let checklistLoaded=false;
 let editingChecklistId=null;
